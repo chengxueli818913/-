@@ -1,0 +1,863 @@
+# 本文的更多语法细节可以参考大佬的说明
+# https://clash-meta.wiki/config/
+# yaml 大小写敏感，使用缩进表示层级关系，缩进不允许使用 tab, 只允许空格，缩进的空格数不重要，只要相同层级的元素左对齐即可
+
+# 混合端口，默认使用 7890
+# http(s)+socks的代理都将使用混合端口
+mixed-port: 7890
+
+# 本配置已采用混合端口，因此以下类型的端口配置均已被注释
+# redirect 透明代理端口，仅能代理 TCP 流量
+# redir-port: 7893
+# tproxy 透明代理端口，可以代理 TCP 以及 UDP 流量
+# tproxy-port: 7894
+
+# 是否允许局域网内其他设备通过本机代理访问互联网，默认允许（true/false）
+allow-lan: true
+
+# 绑定地址，默认为所有
+bind-address: '*'
+
+# 模式，默认采用 规则（rule） 模式
+mode: rule
+# rule 规则匹配
+# global 全局代理(需要在GLOBAL策略组选择代理/策略)
+# direct 全局直连
+
+# 日志等级，默认为Info
+log-level: info
+# silent 静默，不输出
+# error 仅输出发生错误至无法使用的日志
+# warning 输出发生错误但不影响运行的日志，以及 error 级别内容
+# info 输出一般运行的内容，以及 error 和 warning 级别的日志
+# debug 尽可能的输出运行中所有的信息
+
+# 外部控制器，可以使用 RESTful API 来控制你的 Clash 内核
+external-controller: '127.0.0.1:9090'
+# API 监听地址，你可以将 127.0.0.1 修改为 0.0.0.0 来监听所有 IP
+
+# HTTPS-API 监听地址，需要配置 tls 部分证书和其私钥配置，使用 TLS 也必须填写 external-controller
+# external-controller-tls: 127.0.0.1:9443
+# API 的访问密钥
+# secret: ""
+
+# 外部用户界面
+# 可以将静态网页资源（比如 Clash-dashboard) 运行在 Clash API, 路径为 API 地址/ui
+# 可以为绝对路径，或者 Clash 工作目录的相对路径
+# external-ui: dashboard
+
+# 是否允许内核接受 IPv6 流量，默认为 false（true/false）
+ipv6: false
+
+#  控制是否让 Clash 去匹配进程
+find-process-mode: strict
+#  - always 开启，强制匹配所有进程
+#  - strict 默认，由 clash 判断是否开启
+#  - off 不匹配进程，推荐在路由器上使用此模式
+
+# 统一延迟，更换延迟计算方式,去除握手等额外延迟（true/false）
+# unified-delay: true
+
+# TCP并发（true/false）
+# tcp-concurrent: true
+
+# 出站接口，Clash 的流量出站接口
+# interface-name: en0
+
+# GEO数据模式，更改geoip使用文件,mmdb或者dat，true为dat,此项有默认值flase
+# 在meta核心下，可以快速获取geo的分流规则
+geodata-mode: true
+
+# 自定义 GEO数据的链接地址
+geox-url:
+  geoip: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
+
+# DNS配置
+dns:
+    # 是否启用，如为 false，则使用系统 DNS 解析（true/false）
+    enable: true
+
+    # 是否开启 DOH 的 http/3（true/false）
+    prefer-h3: true
+
+    # DNS服务监听
+    # listen: 0.0.0.0:1053
+
+    # 是否解析 IPV6, 如为 false, 则回应 AAAA 的空解析（true/false）
+    ipv6: false
+
+    # Clash 的 DNS 处理模式（fake-ip / redir-host）
+    enhanced-mode: fake-ip
+    # 在 POSIX 规范下，执行网络请求需要先通过 gethostbyname 等类似方法进行 DNS 解析
+    # 再通过 connect 去连接获取到的 IP 地址，导致接管请求时会遇到一个问题：必须要先进行 DNS 解析
+    # 但是，如果该网络请求 Surge 决定交给代理服务器去转发，那么在本地进行的 DNS 查询就是无意义的，
+    # 而且在某些情况下，该域名可能根本无法在本地进行解析。
+    # 为解决这个问题，在收到一个 DNS 查询时，并不会进行真正的 DNS 查询，
+    # 而是直接返回一个 Fake IP 地址（通常为 198.18.x.x，该地址段并不会在公网上被使用）。
+    # 后续收到发往 Fake IP 的 TCP 或 UDP 数据包时，将该虚假 IP 翻译回原始域名进行后续处理。
+    
+    # fakeip 下的 IP 段设置，tun 网卡的默认 ip 也使用此值（格式为 ip/掩码）
+    fake-ip-range: 198.18.0.1/16
+
+    # fakeip 过滤，以下地址不会下发 fakeip 映射用于连接
+    fake-ip-filter:
+      - '*.lan'
+      - localhost.ptlogin2.qq.com
+
+    # 是否查询系统 hosts，默认true(true/false)
+    use-hosts: true
+
+    # 默认 DNS, 用于解析 DNS 服务器 的域名
+    # 必须为 IP, 可为加密 DNS
+    default-nameserver:
+      - 114.114.114.114
+      - 8.8.8.8
+      - 119.29.29.29
+      - tls://223.5.5.5:853
+    # default-nameserver: [223.5.5.5, 119.29.29.29]
+
+    # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询
+    # nameserver-policy:
+    #    'www.baidu.com': '114.114.114.114'
+    #    '+.internal.crop.com': '10.0.0.1'
+    #    'geosite:geolocation-!cn': [tls://8.8.4.4, https://1.0.0.1/dns-query]
+    #    'www.baidu.com,+.google.cn': https://doh.pub/dns-query
+    #    'geosite:private,apple': https://dns.alidns.com/dns-query
+    #    'rule-set:google': 8.8.8.8
+
+    # 默认的域名解析服务器，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析
+    nameserver: ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query']
+
+    # 代理节点域名解析服务器，仅用于解析代理节点的域名
+    # 如果在解析机场节点域名时有问题，可尝试启用以下配置
+    # proxy-server-nameserver:
+    #  - https://doh.pub/dns-query
+
+    # 后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信
+    # 配置 fallback后默认启用 fallback-filter,geoip-code为 cn
+    fallback: ['https://doh.dns.sb/dns-query', 'https://dns.cloudflare.com/dns-query', 'https://dns.twnic.tw/dns-query', 'tls://8.8.4.4:853']
+    # 如果域名解析结果有问题，可尝试启用以下配置
+    # fallback:
+    #  - tls://dns.google
+    #  - https://1.0.0.1/dns-query
+
+    # 后备域名解析服务器筛选，满足条件的将使用 fallback结果或只使用 fallback解析
+    fallback-filter:
+        geoip: true
+        geoip-code: CN
+        geosite:
+          - gfw
+        ipcidr:
+          - 240.0.0.0/4
+        domain:
+          - '+.google.com'
+          - '+.facebook.com'
+          - '+.youtube.com'
+          - '+.twitter.com'
+          - '+.abema.tv'
+          - '+.yahoo.co.jp'
+          - '+.netflix.com'
+    # geoip-code
+    # 可选值为 国家缩写，默认值为 CN
+    # 除了 geoip-code 配置的国家 IP, 其他的 IP 结果会被视为污染
+    # geoip-code 配置的国家的结果会直接采用，否则将采用 fallback结果
+
+    # geosite
+    # 可选值为对于的 geosite 内包含的集合
+    # geosite 列表的内容被视为已污染，匹配到 geosite 的域名，将只使用 fallback解析，不去使用 nameserver
+
+    # ipcidr
+    # 书写内容为 IP/掩码
+    # 这些网段的结果会被视为污染，nameserver解析出这些结果时将会采用 fallback的解析结果
+
+    # domain
+    # 这些域名被视为已污染，匹配到这些域名，会直接使用 fallback解析，不去使用 nameserver
+
+    # fallback-filter: { geoip: true, ipcidr: [240.0.0.0/4, 0.0.0.0/32] }
+
+# 缓存，在 Clash 官方中，profile 应为扩展配置，但在 Clash.meta, 仅作为缓存项使用
+profile: 
+  # 存储 select 选择记录（true/false）
+  # 储存 API 对策略组的选择，以供下次启动时使用
+  store-selected: true
+
+  # 持久化 fake-ip
+  # 储存 fakeip 映射表，域名再次发生连接时，使用原有映射地址
+  store-fake-ip: true
+
+# Tun 配置，默认不启用，因此不用特别关心他们的配置，除非你要启用它
+tun:
+  # 是否启用 tun 模式来路由全局流量，默认不启用（true/false）
+  enable: false
+  # 如果你发现有些程序未能正常通过代理来访问，则需要启用TUN模式
+  
+  # tun 模式堆栈,如无使用问题（system / gvisor / lwip）
+  stack: system
+  # 建议使用 system 栈，MacOS 用户推荐 gvisor栈
+
+  # 指定 tun 网卡名称,MacOS 设备只能使用 utun 开头的网卡名
+  # device: utun0
+
+  # 自动设置全局路由,可以自动将全局流量路由进入 tun 网卡，默认true
+  # auto-route: true 
+
+  # 自动选择流量出口接口,多出口网卡同时连接的设备建议手动指定出口网卡，默认true
+  # auto-detect-interface: true
+
+  # dns 劫持,一般设置为 any:53 即可, 即劫持所有 53 端口的 udp 流量
+  dns-hijack:
+    - 0.0.0.0:53 # 需要劫持的 DNS
+  # {% hint style="warning" %} MACOS 无法自动劫持发往局域网的 dns 请求
+  # ANDROID 如开启私人 dns 则无法自动劫持 dns 请求
+  # LINUX 如果 systemd-resolved 开启无法自动劫持 dns 请求
+
+  # 严格路由,它可以防止地址泄漏,并使 DNS 劫持在 Android 和使用 systemd-resolved 的 Linux 上工作
+  # 将所有连接路由到tun来防止泄漏，但你的设备将无法其他设备被访问
+  # strict-route: true
+
+  # 最大传输单元，会影响极限状态下的速率,一般用户默认即可
+  # mtu: 9000 
+
+  # 启用 auto_route时使用自定义 ipv4 路由而不是默认路由,一般无需配置。
+  inet4-route-address: 
+    - 0.0.0.0/1
+    - 128.0.0.0/1
+  # 启用 auto-route时使用自定义 ipv6 路由而不是默认路由,一般无需配置。
+  inet6-route-address: 
+    - "::/1"
+    - "8000::/1"
+
+  # 启用独立于端点的 NAT,性能可能会略有下降,所以不建议在不需要的时候开启。
+  # endpoint-independent-nat: false 
+
+  # 限制被路由用户,默认不限制
+  # UID 规则仅在 Linux 下被支持，并且需要 auto_route
+  # include-uid: 
+  # - 0
+
+  # 限制被路由的的用户范围
+  # include-uid-range: 
+  # - 1000-99999
+  # 排除路由的的用户
+  # exclude-uid: 
+  #- 1000
+  # 排除路由的的用户范围
+  # exclude-uid-range: 
+  # - 1000-99999
+
+  # Android 用户和应用规则仅在 Android 下被支持
+  # 并且需要 auto-route
+
+  # include-android-user: # 限制被路由的 Android 用户
+  # - 0 # 机主
+  # - 10 # 手机分身
+  # - 999 # 应用多开
+  
+  # 以下是安卓的应用分流配置
+  # 限制被路由的 Android 应用包名
+  # include-package: 
+  # - com.android.chrome
+  # 排除被路由的 Android 应用包名
+  # exclude-package: 
+  # - com.android.captiveportallogin
+
+
+proxy-providers:
+  # 自定义机场名称
+  🛫 机场1:
+    # 代理提供的类型，订阅地址则使用http
+    type: http
+    # 机场订阅链接，使用 Clash 链接，部分机场订阅地址无法使用，可以尝试在订阅地址后面追加 &flag=clash
+    url: 'clash_url'
+    # 机场订阅文件将被下载并保存到clash目录的以下路径中
+    path: ./proxies/机场1.yaml
+    # 更新间隔，单位为秒
+    interval: 86400
+    # 过滤机场中的节点，筛选并只保留命中关键字的节点，注释状态则获取所有节点
+    # filter: '专线'
+    # 健康检查配置
+    health-check:
+      # 是否启用健康检查配置
+      enable: true
+      # 健康检查的间隔，单位为秒，间隔长短而根据该机场的体质自行决定
+      interval: 600
+      # 未选择到当前策略组时，不会进行测试
+      # lazy: true
+      # 用于健康检查的服务器地址
+      url: 'https://www.gstatic.com/generate_204'
+
+  🛫 机场2:
+    type: http
+    url: 'clash_url'
+    path: ./proxies/机场2.yaml
+    interval: 3600
+    filter: '专线'
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+
+  🛫 机场3:
+    type: http
+    url: 'clash_url'
+    path: ./proxies/机场3.yaml
+    interval: 3600
+    # filter: '专线'
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+
+  🛫 机场4:
+    type: http
+    url: 'clash_url'
+    path: ./proxies/机场4.yaml
+    interval: 3600
+    filter: '专线'
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+
+# 网络流行免费的WARP，在获取公钥和私钥后，自行替换掉PublicKeyString和PrivateKeyString
+proxies:
+    - { name: WARP1, type: wireguard, server: 188.114.96.104, port: 4177, ip: 172.16.0.2, public-key: PublicKeyString, private-key: PrivateKeyString, mtu: 1280, udp: true }
+    - { name: WARP2, type: wireguard, server: 188.114.97.41, port: 1002, ip: 172.16.0.2, public-key: PublicKeyString, private-key: PrivateKeyString, mtu: 1280, udp: true }
+    - { name: WARP3, type: wireguard, server: 188.114.98.99, port: 4177, ip: 172.16.0.2, public-key: PublicKeyString, private-key: PrivateKeyString, mtu: 1280, udp: true }
+    - { name: WARP4, type: wireguard, server: 188.114.99.155, port: 1843, ip: 172.16.0.2, public-key: PublicKeyString, private-key: PrivateKeyString, mtu: 1280, udp: true }
+    - { name: WARP5, type: wireguard, server: 162.159.192.0, port: 943, ip: 172.16.0.2, public-key: PublicKeyString, private-key: PrivateKeyString, mtu: 1280, udp: true }
+    - { name: WARP6, type: wireguard, server: 162.159.195.212, port: 1002, ip: 172.16.0.2, public-key: PublicKeyString, private-key: PrivateKeyString, mtu: 1280, udp: true }
+    - { name: WARP7, type: wireguard, server: 188.114.99.99, port: 7559, ip: 172.16.0.2, public-key: PublicKeyString, private-key: PrivateKeyString, mtu: 1280, udp: true }
+    - { name: WARP8, type: wireguard, server: 188.114.98.219, port: 1843, ip: 172.16.0.2, public-key: PublicKeyString, private-key: PrivateKeyString, mtu: 1280, udp: true }
+
+# 分组设计思路
+# 假设你购买了多个机场
+# 机场1是一个优质机场，节点解锁了各种流媒体，但总体流量不高，希望更好地用于流媒体播放
+# 机场2、3、4是性价比机场，在浏览网页、推特、TG、FB、等不挑IP的网站时，用性价比机场来节省优质机场的流量
+# 因此，在分组中把各个地区分为【XX普通】和【XX流媒】
+proxy-groups:
+  - name: 🚀 节点选择
+    # 手动选择节点
+    type: select
+    proxies:
+      - ♻️ 自动普通
+      - 🇭🇰 香港普通
+      - 🇭🇰 香港流媒
+      - 🇹🇼 台湾普通
+      - 🇹🇼 台湾流媒
+      - 🇯🇵 日本普通
+      - 🇯🇵 日本流媒
+      - 🇸🇬 新加坡普通
+      - 🇸🇬 新加坡流媒
+      - 🇺🇲 美国普通
+      - 🇺🇲 美国流媒
+      - WARP自动
+#      - 🇰🇷 韩国节点
+
+  - name: ♻️ 自动普通
+    # 手动选择节点
+    type: url-test
+    proxies:
+      - 🇭🇰 香港普通
+      - 🇹🇼 台湾普通
+      - 🇯🇵 日本普通
+      - 🇸🇬 新加坡普通
+      - 🇺🇲 美国普通
+      - WARP自动
+#      - 🇰🇷 韩国节点
+    url: 'https://www.gstatic.com/generate_204'
+    interval: 100
+
+  # WARP
+  - name: WARP自动
+    type: url-test
+    proxies:
+      - WARP1
+      - WARP2
+      - WARP3
+      - WARP4
+      - WARP5
+      - WARP6
+      - WARP7
+      - WARP8
+    url: 'https://www.gstatic.com/generate_204'
+    interval: 100
+
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - 🎯 全球直连
+
+  - name: Ⓜ️ 微软服务
+    type: select
+    proxies:
+      - 🎯 全球直连
+      - 🚀 节点选择
+      - ♻️ 自动普通
+
+#  - name: 🗽 Google 中国
+#    type: select
+#    proxies:
+#      - 🎯 全球直连
+#      - 🚀 节点选择
+
+  - name: 🍎 苹果中国
+    type: select
+    proxies:
+      - 🎯 全球直连
+      - 🚀 节点选择
+      - ♻️ 自动普通
+
+  - name: 🇨🇳 国内 IP
+    type: select
+    proxies:
+      - 🎯 全球直连
+      - 🚀 节点选择
+
+  - name: ✈️ 电报消息
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - ♻️ 自动普通
+      - 🇭🇰 香港普通
+      - 🇹🇼 台湾普通
+      - 🇯🇵 日本普通
+      - 🇸🇬 新加坡普通
+      - 🇺🇲 美国普通
+      - WARP自动
+
+  - name: 🎥 奈飞视频
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - 🇭🇰 香港流媒
+      - 🇹🇼 台湾流媒
+      - 🇯🇵 日本流媒
+      - 🇸🇬 新加坡流媒
+      - 🇺🇲 美国流媒
+
+  - name: 📹 油管视频
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - ♻️ 自动普通
+      - 🇭🇰 香港普通
+      - 🇹🇼 台湾普通
+      - 🇯🇵 日本普通
+      - 🇸🇬 新加坡普通
+      - 🇺🇲 美国普通
+      - WARP自动
+
+  - name: 💬 OpenAI
+    type: select
+    proxies:
+      - 🚀 节点选择
+      - 🇭🇰 香港流媒
+      - 🇹🇼 台湾流媒
+      - 🇯🇵 日本流媒
+      - 🇸🇬 新加坡流媒
+      - 🇺🇲 美国流媒
+
+  - name: 🎯 全球直连
+    type: select
+    proxies:
+      - DIRECT
+
+  - name: 🛑 全球拦截
+    type: select
+    proxies:
+      - REJECT
+
+##以下代理组被简化
+#  - name: ⚡ 直连域名
+#    type: select
+#    proxies:
+#      - 🎯 全球直连
+#      - 🚀 节点选择
+
+#  - name: 🪜 代理域名
+#    type: select
+#    proxies:
+#      - 🚀 节点选择
+#      - 🎯 全球直连
+
+#  - name: 🎮 国区游戏
+#    type: select
+#    proxies:
+#      - 🎯 全球直连
+#      - 🚀 节点选择
+
+#  - name: 🏠 私有网络
+#    type: select
+#    proxies:
+#      - 🎯 全球直连
+
+#  - name: ⛔️ 广告域名
+#    type: select
+#    proxies:
+#      - 🛑 全球拦截
+
+  # Speedtest 测速网站
+  - name: 📈 网络测速
+    type: select
+    proxies:
+      # 测试本地网络速度（运营商网络速度）
+      - 🎯 全球直连
+      # 测试机场速度（翻墙后网络速度）
+      - 🚀 节点选择
+
+  # 国家或地区节点
+  - name: 🇭🇰 香港普通
+    # 自动选择，即按照 url 测试结果使用延迟最低的节点（下同）
+    type: url-test
+    # 容差大于 100ms 就会切换到延迟低的那个节点
+    tolerance: 100
+    use:
+      # 使用 proxy-providers 中的节点名称（下同）
+      - 🛫 机场2
+      - 🛫 机场3
+      - 🛫 机场4
+    # 筛选出“香港”节点，支持正则表达式（下同）
+    filter: "(?i)港|hk|hongkong|hong kong"
+
+  - name: 🇭🇰 香港流媒
+    # 自动选择，即按照 url 测试结果使用延迟最低的节点（下同）
+    type: url-test
+    # 容差大于 100ms 就会切换到延迟低的那个节点
+    tolerance: 100
+    use:
+      # 使用 proxy-providers 中的节点名称（下同）
+      - 🛫 机场1
+    # 筛选出“香港”节点，支持正则表达式（下同）
+    filter: "(?i)港|hk|hongkong|hong kong"
+
+  - name: 🇹🇼 台湾普通
+    type: url-test
+    tolerance: 100
+    use:
+      - 🛫 机场2
+      - 🛫 机场3
+      - 🛫 机场4
+    filter: "(?i)台|tw|taiwan"
+
+  - name: 🇹🇼 台湾流媒
+    type: url-test
+    tolerance: 100
+    use:
+      - 🛫 机场1
+    filter: "(?i)台|tw|taiwan"
+
+  - name: 🇯🇵 日本普通
+    type: url-test
+    tolerance: 100
+    use:
+      - 🛫 机场2
+      - 🛫 机场3
+      - 🛫 机场4
+    filter: "(?i)日本|jp|japan"
+
+  - name: 🇯🇵 日本流媒
+    type: url-test
+    tolerance: 100
+    use:
+      - 🛫 机场1
+    filter: "(?i)日本|jp|japan"
+
+  - name: 🇸🇬 新加坡普通
+    type: url-test
+    tolerance: 100
+    use:
+      - 🛫 机场2
+      - 🛫 机场3
+      - 🛫 机场4
+    filter: "(?i)(新|sg|singapore)"
+
+  - name: 🇸🇬 新加坡流媒
+    type: url-test
+    tolerance: 100
+    use:
+      - 🛫 机场1
+    filter: "(?i)(新|sg|singapore)"
+
+  - name: 🇺🇲 美国普通
+    type: url-test
+    tolerance: 100
+    use:
+      - 🛫 机场2
+      - 🛫 机场3
+      - 🛫 机场4
+    filter: "(?i)美|us|unitedstates|united states"
+
+  - name: 🇺🇲 美国流媒
+    type: url-test
+    tolerance: 100
+    use:
+      - 🛫 机场1
+    filter: "(?i)美|us|unitedstates|united states"
+
+##以下节点分组被简化
+#  - name: 所有节点
+#    # 自动选择，即按照 url 测试结果使用延迟最低的节点（下同）
+#    type: select
+#    use:
+#      # 使用 proxy-providers 中的节点名称（下同）
+#      - 🛫 机场1
+#      - 🛫 机场2
+#      - 🛫 机场3
+#    # 筛选出“香港”节点，支持正则表达式（下同）
+#    filter: "(?i)🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates"
+#  - name: 🇰🇷 韩国节点
+#    type: url-test
+#    tolerance: 100
+#    use:
+#      - 🛫 机场1
+#      - 🛫 机场2
+#      - 🛫 机场3
+#    filter: "韩国"
+
+rule-providers:
+  reject:
+    type: http
+    behavior: domain
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt"
+    path: ./ruleset/reject.yaml
+    interval: 86400
+
+  icloud:
+    type: http
+    behavior: domain
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/icloud.txt"
+    path: ./ruleset/icloud.yaml
+    interval: 86400
+
+  apple:
+    type: http
+    behavior: domain
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt"
+    path: ./ruleset/apple.yaml
+    interval: 86400
+
+  streaming:
+    type: http
+    behavior: classical
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/DivineEngine/Profiles/master/Clash/RuleSet/StreamingMedia/Streaming.yaml"
+    path: ./ruleset/streaming.yaml
+    interval: 86400
+  
+  steam:
+    type: http
+    behavior: classical
+    url: 'https://ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.yaml'
+    path: ./ruleset/steam.yaml
+    interval: 86400
+
+  steamCN:
+    type: http
+    behavior: classical
+    url: 'https://ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/SteamCN/SteamCN.yaml'
+    path: ./ruleset/steamCN.yaml
+    interval: 86400
+    
+  youtube:
+    type: http
+    behavior: classical
+    url: 'https://ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml'
+    path: ./ruleset/youtube.yaml
+    interval: 86400
+
+  proxy:
+    type: http
+    behavior: domain
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt"
+    path: ./ruleset/proxy.yaml
+    interval: 86400
+
+  direct:
+    type: http
+    behavior: domain
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt"
+    path: ./ruleset/direct.yaml
+    interval: 86400
+
+  private:
+    type: http
+    behavior: domain
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/private.txt"
+    path: ./ruleset/private.yaml
+    interval: 86400
+
+  telegramcidr:
+    type: http
+    behavior: ipcidr
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
+    path: ./ruleset/telegramcidr.yaml
+    interval: 86400
+
+  lancidr:
+    type: http
+    behavior: ipcidr
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/lancidr.txt"
+    path: ./ruleset/lancidr.yaml
+    interval: 86400
+
+  applications:
+    type: http
+    behavior: classical
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt"
+    path: ./ruleset/applications.yaml
+    interval: 86400
+
+  Emby:
+    type: http
+    behavior: classical
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Emby/Emby.yaml"
+    path: ./ruleset/Emby.yaml
+    interval: 86400
+
+  Netflix:
+    type: http
+    behavior: classical
+    url: "https://fastly.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Netflix/Netflix_Classical.yaml"
+    path: ./ruleset/Netflix.yaml
+    interval: 86400
+
+  Abema:
+    type: http
+    behavior: classical
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AbemaTV/AbemaTV.yaml"
+    path: ./ruleset/Abema.yaml
+    interval: 86400
+
+  TVer:
+    type: http
+    behavior: classical
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TVer/TVer.yaml"
+    path: ./ruleset/TVer.yaml
+    interval: 86400
+
+  Niconico:
+    type: http
+    behavior: classical
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Niconico/Niconico.yaml"
+    path: ./ruleset/Niconico.yaml
+    interval: 86400
+
+  Disney:
+    type: http
+    behavior: classical
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney.yaml"
+    path: ./ruleset/Disney.yaml
+    interval: 86400
+
+  OneDrive:
+    type: http
+    behavior: classical
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OneDrive/OneDrive.yaml"
+    path: ./ruleset/OneDrive.yaml
+    interval: 86400
+
+  Microsoft:
+    type: http
+    behavior: classical
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml"
+    path: ./ruleset/Microsoft.yaml
+    interval: 86400
+
+  MiTVAds:
+    type: http
+    behavior: classical
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdvertisingMiTV/AdvertisingMiTV.yaml"
+    path: ./ruleset/MiTVAds.yaml
+    interval: 86400
+
+  ZhihuAds:
+    type: http
+    behavior: classical
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ZhihuAds/ZhihuAds.yaml"
+    path: ./ruleset/ZhihuAds.yaml
+    interval: 86400
+
+  OpenAI:
+    type: http
+    behavior: classical
+    url: "https://ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml"
+    path: ./ruleset/OpenAI.yaml
+    interval: 86400
+
+# 如果你想自行添加分流规则，可以参考这位大佬汇总的规则
+# https://github.com/blackmatrix7/ios_rule_script/tree/master/rule/Clash/
+
+rules:
+
+    # 排除WARP接入点
+    - IP-CIDR,162.159.192.0/24,DIRECT
+    - IP-CIDR,162.159.193.0/24,DIRECT
+    - IP-CIDR,162.159.195.0/24,DIRECT
+    - IP-CIDR,162.159.204.0/24,DIRECT
+    - IP-CIDR,188.114.96.0/24,DIRECT
+    - IP-CIDR,188.114.97.0/24,DIRECT
+    - IP-CIDR,188.114.98.0/24,DIRECT
+    - IP-CIDR,188.114.99.0/24,DIRECT
+
+    - RULE-SET,reject,🛑 全球拦截
+    - RULE-SET,MiTVAds,🛑 全球拦截
+    - RULE-SET,ZhihuAds,🛑 全球拦截
+
+    - RULE-SET,applications,DIRECT
+    - RULE-SET,Emby,♻️ 自动普通
+    - RULE-SET,Abema,🇯🇵 日本流媒
+    - RULE-SET,TVer,🇯🇵 日本流媒
+    - RULE-SET,Niconico,🇯🇵 日本流媒
+    - RULE-SET,Disney,🇸🇬 新加坡流媒
+    - RULE-SET,Microsoft,Ⓜ️ 微软服务
+    - RULE-SET,OneDrive,Ⓜ️ 微软服务
+
+    - DOMAIN,clash.razord.top,DIRECT
+    - DOMAIN,yacd.haishan.me,DIRECT
+    - RULE-SET,private,DIRECT
+
+    - RULE-SET,icloud,🍎 苹果中国
+    - RULE-SET,apple,🍎 苹果中国
+    - RULE-SET,youtube,📹 油管视频
+    - RULE-SET,Netflix,🎥 奈飞视频
+    - RULE-SET,OpenAI,💬 OpenAI
+    
+    - RULE-SET,streaming,🚀 节点选择
+    - RULE-SET,steamCN,DIRECT
+    # 本人不玩游戏，有需要的自行添加调整
+    # - RULE-SET,steam,🎮 国区游戏
+    - RULE-SET,proxy,🚀 节点选择
+    - RULE-SET,direct,DIRECT
+    - RULE-SET,telegramcidr,✈️ 电报消息
+    - RULE-SET,lancidr,DIRECT
+
+    - 'DOMAIN,xn--mes91r2ng7p4a.com,DIRECT'
+
+    - 'DOMAIN-SUFFIX,cn,DIRECT'
+    - 'DOMAIN-KEYWORD,-cn,DIRECT'
+    - 'GEOIP,CN,DIRECT'
+    - 'MATCH,🚀 节点选择'
+
+##GEOSITE语法需要META内核的支持
+#    - GEOSITE,biliintl, 哔哩东南亚
+#    - GEOSITE,ehentai,ehentai
+#    - GEOSITE,github,github
+#    - GEOSITE,twitter,Twitter
+#    - GEOSITE,youtube,YouTube
+#    - GEOSITE,google,Google
+#    - GEOSITE,telegram,Telegram
+#    - GEOSITE,netflix,NETFLIX
+#    - GEOSITE,bilibili,哔哩哔哩
+#    - GEOSITE,bahamut,巴哈姆特
+#    - GEOSITE,spotify,Spotify
+#    - GEOSITE,geolocation-!cn,其他
+
+#    - GEOIP,google,Google
+#    - GEOIP,netflix,NETFLIX
+#    - GEOIP,telegram,Telegram
+#    - GEOIP,twitter,Twitter
+#    - GEOSITE,CN,DIRECT
+#    - GEOIP,CN,DIRECT
