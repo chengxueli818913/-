@@ -128,7 +128,7 @@ proxies:
   - {"type":"vless","name":"121","server":"45.159.218.36","port":443,"uuid":"2cd6ed0f-636e-4e6c-9449-5a263d7a0fa5","skip-cert-verify":true,"udp":true,"tls":true,"network":"ws","servername":"cfed.tgzdyz2.top","ws-opts":{"path":"tg@zdyz2","headers":{"host":"cfed.tgzdyz2.top"}}}
   - {"type":"vmess","name":"122","ws-opts":{"path":"/v2ray","headers":{"host":"%7B%22Host%22:%22193.25.215.160%22%7D"}},"server":"120.232.240.56","port":"16928","uuid":"5f6b3c3f-b0a8-33f5-95c6-371f8c6af973","alterId":"0","cipher":"auto","network":"ws"}
   - {"type":"vless","name":"123","server":"194.24.161.146","port":4090,"uuid":"2cd6ed0f-636e-4e6c-9449-5a263d7a0fa5","skip-cert-verify":true,"udp":true,"tls":true,"network":"ws","servername":"cfed.tgzdyz2.top","ws-opts":{"path":"/tg@zdyz2","headers":{"host":"cfed.tgzdyz2.top"}}}
-  - {"type":"vmess","name":"12","server":"183.236.51.23","port":"54100","uuid":"418048af-a293-4b99-9b0c-98ca3580dd24","alterId":"64","cipher":"auto","network":"tcp"}
+  - {"type":"vmess","name":"124","server":"183.236.51.23","port":"54100","uuid":"418048af-a293-4b99-9b0c-98ca3580dd24","alterId":"64","cipher":"auto","network":"tcp"}
   - {"type":"vless","name":"125","server":"38.180.150.193","port":8443,"uuid":"2cd6ed0f-636e-4e6c-9449-5a263d7a0fa5","skip-cert-verify":true,"udp":true,"tls":true,"network":"ws","servername":"cfed.tgzdyz2.top","ws-opts":{"path":"/tg@zdyz2","headers":{"host":"cfed.tgzdyz2.top"}}}
   - {"type":"vless","name":"126","server":"61.77.9.219","port":12487,"uuid":"2cd6ed0f-636e-4e6c-9449-5a263d7a0fa5","skip-cert-verify":true,"udp":true,"tls":true,"network":"ws","servername":"cfed.tgzdyz2.top","ws-opts":{"path":"/tg@zdyz2","headers":{"host":"cfed.tgzdyz2.top"}}}
   - {"type":"vless","name":"127","server":"150.66.24.104","port":34237,"uuid":"2cd6ed0f-636e-4e6c-9449-5a263d7a0fa5","skip-cert-verify":true,"udp":true,"tls":true,"network":"ws","servername":"cfed.tgzdyz2.top","ws-opts":{"path":"tg@zdyz2","headers":{"host":"cfed.tgzdyz2.top"}}}
@@ -307,9 +307,7 @@ proxy-groups:
       - 146
       - 147
       - 148
-      - 149
-      - 150
-      - 151
+      
   - name: ♻️ 自动选择
     type: url-test
     url: http://www.gstatic.com/generate_204
@@ -464,9 +462,7 @@ proxy-groups:
       - 146
       - 147
       - 148
-      - 149
-      - 150
-      - 151
+    
   - name: 🌍 国外媒体
     type: select
     proxies:
@@ -621,9 +617,7 @@ proxy-groups:
       - 146
       - 147
       - 148
-      - 149
-      - 150
-      - 151
+     
   - name: 📲 电报信息
     type: select
     proxies:
@@ -777,9 +771,7 @@ proxy-groups:
       - 146
       - 147
       - 148
-      - 149
-      - 150
-      - 151
+     
   - name: Ⓜ️ 微软服务
     type: select
     proxies:
@@ -933,9 +925,7 @@ proxy-groups:
       - 146
       - 147
       - 148
-      - 149
-      - 150
-      - 151
+      
   - name: 🍎 苹果服务
     type: select
     proxies:
@@ -1089,9 +1079,7 @@ proxy-groups:
       - 146
       - 147
       - 148
-      - 149
-      - 150
-      - 151
+   
   - name: 🎯 全球直连
     type: select
     proxies:
