@@ -15,31 +15,31 @@ dns:
     - tls://1.0.0.1:853
     - tls://dns.google:853
 proxies:
-  - {name: 1, server: 157.148.96.89, port: 8443, type: trojan, password: 85bce006-4885-11ee-8792-f23c9164ca5d, skip-cert-verify: true, udp: true}
-  - {name: 2, server: tg_mfbpn03.52cloud.us.kg, port: 32185, type: ss, cipher: chacha20-ietf-poly1305, password: 5409bf78-b122-4b9b-9050-da36576f5bbc, udp: true}
-  - {name: 3, server: 172.99.190.206, port: 443, type: vmess, uuid: 03fcc618-b93d-6796-6aed-8a38c975d581, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, servername: 172.99.190.206, network: ws, ws-opts: {path: /linkvws}, udp: true}
-  - {name: 4, server: hknode07.oportal.cc, port: 443, type: trojan, password: 981db44e-9f07-49eb-9ba0-6ab4939919a2, skip-cert-verify: true, udp: true}
-  - {name: 5, server: z3.fragranceninja.com, port: 12959, type: vmess, uuid: a32313ad-5e39-4f9a-9cad-512041790050, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, network: ws, ws-opts: {path: /, headers: {Host: z3.fragranceninja.com}}, udp: true}
-  - {name: 6, server: 150.107.46.21, port: 8083, type: ssr, cipher: aes-256-cfb, password: iFqnzSscN, protocol: origin, obfs: tls1.2_ticket_auth, protocol-param: "", obfs-param: "", udp: true}
-  - {name: 7, server: hkt2.bika.hk, port: 30251, type: vmess, uuid: 9e88a10b-655c-5120-89d0-408634169561, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
-  - {name: 8, server: 28b09af269781f9b.cdn.jiashule.com, port: 40238, type: ssr, cipher: rc4-md5, password: ENZ52K, protocol: auth_aes128_md5, obfs: plain, protocol-param: 86416:SlZFuy, obfs-param: 8195986416.6602b8463464108506.microsoft.com, udp: true}
-  - {name: 9, server: z3.fragranceninja.com, port: 12901, type: vmess, uuid: a32313ad-5e39-4f9a-9cad-512041790050, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, udp: true}
-  - {name: 10, server: z6.fragranceninja.com, port: 12974, type: vmess, uuid: a32313ad-5e39-4f9a-9cad-512041790050, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, network: ws, ws-opts: {path: /, headers: {Host: z6.fragranceninja.com}}, udp: true}
-  - {name: 11, server: 3.38.102.189, port: 443, type: ss, cipher: aes-256-cfb, password: amazonskr05, udp: true}
-  - {name: 12, server: 120.232.217.96, port: 21017, type: trojan, password: 0e6dc261-9a31-4b5b-9a22-6cad07050e8a, skip-cert-verify: true, udp: true}
-  - {name: 13, server: 3.35.222.240, port: 443, type: ss, cipher: aes-256-cfb, password: amazonskr05, udp: true}
-  - {name: 14, server: 103.6.220.71, port: 21170, type: trojan, password: 0e6dc261-9a31-4b5b-9a22-6cad07050e8a, skip-cert-verify: true, udp: true}
-  - {name: 15, server: 103.6.220.71, port: 21194, type: trojan, password: 0e6dc261-9a31-4b5b-9a22-6cad07050e8a, skip-cert-verify: true, udp: true}
-  - {name: 16, server: sg007.421421.xyz, port: 20230, type: trojan, password: 4aa9ee7a-ffee-4ca4-a588-f5fa9e979c38, skip-cert-verify: true, udp: true}
-  - {name: 17, server: j90r55t0im2kfwz6.3a-sg01.my777999.top, port: 37999, type: ss, cipher: chacha20-ietf-poly1305, password: 2fc5b52d-8efa-4a68-816f-e58b6594a475, udp: true}
-  - {name: 18, server: 9898.fz-6-0-kcet8y0fd-so04.my777999.top, port: 37996, type: vmess, uuid: 2fc5b52d-8efa-4a68-816f-e58b6594a475, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
-  - {name: 19, server: 143.92.42.65, port: 2902, type: vmess, uuid: 640c1077-d10b-4225-a9fb-d3e9c3ce7a00, alterId: 0, cipher: auto, tls: false, skip-cert-verify: true, network: http, http-opts: {method: GET, path: [/], headers: {Host: [wrmelmwxlf.gktevlrqznwqqozy.fabpfs66gizmnojhcvqxwl.kytrcfzqla87gvgvs6c7kjnrubuh.cc]}}, udp: true}
+  - {name: 1, server: 120.232.81.50, port: 16088, client-fingerprint: chrome, type: ss, cipher: aes-256-cfb, password: hGkQ6915tD, tfo: false}
+  - {name: 2 , server: 95b1cd85a0968ff2.cdn.jiashule.com, port: 40203, type: ssr, cipher: rc4-md5, password: ENZ52K, protocol: auth_aes128_md5, obfs: plain, protocol-param: 74592:o4fbeopsgcf, obfs-param: cd5ed74592.6602b8463464108506.microsoft.com, udp: true}
+  - {name: 3, server: 95b1cd85a0968ff2.cdn.jiashule.com, port: 40207, type: ssr, cipher: rc4-md5, password: ENZ52K, protocol: auth_aes128_md5, obfs: plain, protocol-param: 86416:SlZFuy, obfs-param: 8195986416.6602b8463464108506.microsoft.com, udp: true}
+  - {name: 4, server: 95b1cd85a0968ff2.cdn.jiashule.com, port: 40209, type: ssr, cipher: rc4-md5, password: ENZ52K, protocol: auth_aes128_md5, obfs: plain, protocol-param: 86416:SlZFuy, obfs-param: 8195986416.6602b8463464108506.microsoft.com, udp: true}
+  - {name: 5,  server: 28b09af269781f9b.cdn.jiashule.com, port: 40241, type: ssr, cipher: rc4-md5, password: ENZ52K, protocol: auth_aes128_md5, obfs: plain, protocol-param: 74592:o4fbeopsgcf, obfs-param: cd5ed74592.6602b8463464108506.microsoft.com, udp: true}
+  - {name: 6,  server: 28b09af269781f9b.cdn.jiashule.com, port: 40240, type: ssr, cipher: rc4-md5, password: ENZ52K, protocol: auth_aes128_md5, obfs: plain, protocol-param: 74592:o4fbeopsgcf, obfs-param: cd5ed74592.6602b8463464108506.microsoft.com, udp: true}
+  - {name: 7, server: 28b09af269781f9b.cdn.jiashule.com, port: 40239, type: ssr, cipher: rc4-md5, password: ENZ52K, protocol: auth_aes128_md5, obfs: plain, protocol-param: 86416:SlZFuy, obfs-param: 8195986416.6602b8463464108506.microsoft.com, udp: true}
+  - {name: 8,  server: 28b09af269781f9b.cdn.jiashule.com, port: 40257, type: ssr, cipher: rc4-md5, password: ENZ52K, protocol: auth_aes128_md5, obfs: plain, protocol-param: 74592:o4fbeopsgcf, obfs-param: cd5ed74592.6602b8463464108506.microsoft.com, udp: true}
+  - {name: 9, server: 95b1cd85a0968ff2.cdn.jiashule.com, port: 40203, type: ssr, cipher: rc4-md5, password: ENZ52K, protocol: auth_aes128_md5, obfs: plain, protocol-param: 74592:o4fbeopsgcf, obfs-param: cd5ed74592.6602b8463464108506.microsoft.com, udp: true}
+  - {name: 10, server: 95b1cd85a0968ff2.cdn.jiashule.com, port: 40251, type: ssr, cipher: rc4-md5, password: ENZ52K, protocol: auth_aes128_md5, obfs: plain, protocol-param: 74592:o4fbeopsgcf, obfs-param: cd5ed74592.6602b8463464108506.microsoft.com, udp: true}
+  - {name: 11, server: 183.236.51.23, port: 54104, type: vmess, uuid: 418048af-a293-4b99-9b0c-98ca3580dd24, alterId: 64, cipher: none, tls: false, skip-cert-verify: true, udp: true}
+  - {name: 12, server: 183.236.51.23, port: 54104, type: vmess, uuid: 418048af-a293-4b99-9b0c-98ca3580dd24, alterId: 64, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
+  - {name: 13, server: pj.shakalaka.xyz, port: 11789, type: ss, cipher: aes-128-gcm, password: a3c29dd3-d366-4fc2-9efa-ec0c81519b75, udp: true}
+  - {name: 14, server: hzhz2.sssyun.xyz, port: 40016, type: ss, cipher: chacha20-ietf-poly1305, password: d4eeaa7b-43c6-49dc-8020-7389bba4d033, udp: true}
+  - {name: 15, server: server: jp008.421421.xyz, port: 20230, type: trojan, password: 4aa9ee7a-ffee-4ca4-a588-f5fa9e979c38, skip-cert-verify: true, udp: true}
+  - {name: 16, server: 95b1cd85a0968ff2.cdn.jiashule.com, port: 40217, type: ssr, cipher: rc4-md5, password: ENZ52K, protocol: auth_aes128_md5, obfs: plain, protocol-param: 86416:SlZFuy, obfs-param: 8195986416.6602b8463464108506.microsoft.com, udp: true}
+  - {name: 17, server: 95b1cd85a0968ff2.cdn.jiashule.com, port: 40205, type: ssr, cipher: rc4-md5, password: ENZ52K, protocol: auth_aes128_md5, obfs: plain, protocol-param: 74592:o4fbeopsgcf, obfs-param: cd5ed74592.6602b8463464108506.microsoft.com, udp: true}
+  - {name: 18, server: hzhz1.sssyun.xyz, port: 39206, type: ss, cipher: chacha20-ietf-poly1305, password: d4eeaa7b-43c6-49dc-8020-7389bba4d033, udp: true}
+  - {name: 19, server: 51.15.15.82, port: 989, type: ss, cipher: aes-256-cfb, password: f8f7aCzcPKbsF8p3, udp: true}
   - {name: 20, server: z2.fragranceninja.com, port: 12938, type: vmess, uuid: a32313ad-5e39-4f9a-9cad-512041790050, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, network: ws, ws-opts: {path: /, headers: {Host: z2.fragranceninja.com}}, udp: true}
   - {name: 21, server: z6.fragranceninja.com, port: 12943, type: vmess, uuid: a32313ad-5e39-4f9a-9cad-512041790050, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, network: ws, ws-opts: {path: /, headers: {Host: z6.fragranceninja.com}}, udp: true}
-  - {name: 22, server: 183.236.51.50, port: 13035, type: trojan, password: 8d4a8689-e8fd-4405-9834-3f812c528db0, skip-cert-verify: true, udp: true}
-  - {name: 23, server: 35.86.117.124, port: 443, type: ss, cipher: aes-256-cfb, password: amazonskr05, udp: true}
-  - {name: 24, server: z8.fragranceninja.com, port: 12956, type: vmess, uuid: a32313ad-5e39-4f9a-9cad-512041790050, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, network: ws, ws-opts: {path: /, headers: {Host: z8.fragranceninja.com}}, udp: true}
-  - {name: 25, server: 18.236.95.86, port: 443, type: ss, cipher: aes-256-cfb, password: amazonskr05, udp: true}
+  - {name: 22, server: 16.724064.xyz, port: 443, type: vmess, uuid: b7cf4466-956a-4639-b861-0cf78cbb6f8f, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, servername: 16.724064.xyz, network: ws, ws-opts: {path: /zlppvws, headers: {Host: 16.724064.xyz}}, udp: true}
+  - {name: 23, server: 183.236.51.23, port: 51037, type: vmess, uuid: 418048af-a293-4b99-9b0c-98ca3580dd24, alterId: 64, cipher: auto, tls: false, skip-cert-verify: true, udp: true}
+  - {name: 24, server: us004.421421.xyz, port: 20230, type: trojan, password: 47072f01-8e77-4136-8e85-b0f0d9d08f1d, sni: 421421.xyz, skip-cert-verify: true, udp: true}
+  - {name: 25, server: 95b1cd85a0968ff2.cdn.jiashule.com, port: 40262, type: ssr, cipher: rc4-md5, password: ENZ52K, protocol: auth_aes128_md5, obfs: plain, protocol-param: 74592:o4fbeopsgcf, obfs-param: cd5ed74592.6602b8463464108506.microsoft.com, udp: true}
   - {name: 26, server: 95b1cd85a0968ff2.cdn.jiashule.com, port: 40217, type: ssr, cipher: rc4-md5, password: ENZ52K, protocol: auth_aes128_md5, obfs: plain, protocol-param: 86416:SlZFuy, obfs-param: 8195986416.6602b8463464108506.microsoft.com, udp: true}
   - {name: 27, server: 7438974b54cf5c57.cdn.jiashule.com, port: 40216, type: ssr, cipher: rc4-md5, password: ENZ52K, protocol: auth_aes128_md5, obfs: plain, protocol-param: 74592:o4fbeopsgcf, obfs-param: cd5ed74592.6602b8463464108506.microsoft.com, udp: true}
   - {name: 28, server: z8.fragranceninja.com, port: 13007, type: vmess, uuid: a32313ad-5e39-4f9a-9cad-512041790050, alterId: 0, cipher: auto, tls: true, skip-cert-verify: true, network: ws, ws-opts: {path: /, headers: {Host: z8.fragranceninja.com}}, udp: true}
@@ -55,7 +55,7 @@ proxies:
   - {name: 38, server: hkt2.bika.hk, port: 30251, client-fingerprint: chrome, type: vmess, uuid: 9e88a10b-655c-5120-89d0-408634169561, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: false}
   - {name: 39, server: 27.124.10.146, port: 30000, client-fingerprint: chrome, type: vmess, uuid: 2525f395-86fc-4090-b203-d9e6db481101, alterId: 64, cipher: auto, tls: true, tfo: false, skip-cert-verify: false, servername: www.60443882.xyz, network: ws, ws-opts: {path: /path/011410073331, headers: {Host: www.60443882.xyz}}}
   - {name: 40, server: hzhz2.sssyun.xyz, port: 40018, client-fingerprint: chrome, type: ss, cipher: chacha20-ietf-poly1305, password: 9ddd5a1c-2d57-4c68-9f3d-b39ea2b8b698, tfo: false}
-  - {name: 🇭🇰 香港4, server: 120.232.153.40, port: 35601, client-fingerprint: chrome, type: vmess, uuid: 418048af-a293-4b99-9b0c-98ca3580dd24, alterId: 64, cipher: auto, tls: false, tfo: false, skip-cert-verify: false}
+  - {name: 🇭🇰 香港4, server: 183.236.51.23, port: 54104, client-fingerprint: chrome, type: vmess, uuid: 418048af-a293-4b99-9b0c-98ca3580dd24, alterId: 64, cipher: auto, tls: false, tfo: false, skip-cert-verify: false}
   - {name: 🇺🇸 美国2, server: 120.232.153.40, port: 43526, client-fingerprint: chrome, type: vmess, uuid: 21a9bff2-72de-4e62-93ff-8b159f66d875, alterId: 64, cipher: auto, tls: false, tfo: false, skip-cert-verify: false}
   - {name: 🇩🇪 德国, server: 120.232.153.71, port: 43526, client-fingerprint: chrome, type: vmess, uuid: 21a9bff2-72de-4e62-93ff-8b159f66d875, alterId: 64, cipher: auto, tls: false, tfo: false, skip-cert-verify: false}
 proxy-groups:
